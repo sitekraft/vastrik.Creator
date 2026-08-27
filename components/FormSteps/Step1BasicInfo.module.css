@@ -1,0 +1,92 @@
+.card {
+  background: var(--bg-card);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 16px;
+  padding: 32px;
+  margin-top: 32px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 1.25rem;
+  margin-bottom: 32px;
+  text-transform: none;
+}
+
+.icon {
+  font-size: 1.25rem;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+.row {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+@media (min-width: 640px) {
+  .row {
+    flex-direction: row;
+    gap: 24px;
+  }
+  .row .formGroup {
+    flex: 1;
+  }
+}
+
+.label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  letter-spacing: 0.05em;
+}
+
+.inputWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.inputIcon {
+  position: absolute;
+  left: 16px;
+  color: var(--text-secondary);
+  font-size: 1rem;
+}
+
+.input {
+  width: 100%;
+  background: #ffffff;
+  border: 1px solid transparent;
+  padding: 14px 16px 14px 48px;
+  border-radius: 8px;
+  color: #333; /* Dark text on white background as per design */
+  font-size: 0.9rem;
+  font-family: var(--font-body);
+  transition: all 0.2s ease;
+}
+
+.input::placeholder {
+  color: #94a3b8;
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 3px rgba(217, 70, 239, 0.2);
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 32px;
+}

@@ -1,0 +1,83 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  max-width: 600px;
+}
+
+.header {
+  margin-bottom: 40px;
+}
+
+.title {
+  font-size: 2rem;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+}
+
+.sectionTitle {
+  font-size: 1.2rem;
+  margin-bottom: 24px;
+  color: var(--text-secondary);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  padding-bottom: 8px;
+}
+
+.formGroup {
+  margin-bottom: 24px;
+}
+
+.label {
+  display: block;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.input {
+  width: 100%;
+  background: var(--bg-card);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 14px 16px;
+  border-radius: 8px;
+  color: #fff;
+  font-family: var(--font-body);
+  transition: all 0.2s ease;
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 2px rgba(217, 70, 239, 0.2);
+}
+
+.input:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.toggleGroup {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 8px;
+}
+
+.toggleLabel {
+  font-size: 0.9rem;
+  color: var(--text-primary);
+}
+
+.toggle {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}

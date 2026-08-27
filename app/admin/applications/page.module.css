@@ -1,0 +1,120 @@
+.page {
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  margin-bottom: 40px;
+}
+
+.title {
+  font-size: 2rem;
+  color: #fff;
+  margin-bottom: 8px;
+}
+
+.subtitle {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+.tableContainer {
+  background: var(--bg-card);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 16px;
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.table th {
+  padding: 20px 24px;
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.table td {
+  padding: 20px 24px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  vertical-align: middle;
+}
+
+.table tr:last-child td {
+  border-bottom: none;
+}
+
+.table tr:hover td {
+  background: rgba(255, 255, 255, 0.01);
+}
+
+.id {
+  font-family: monospace;
+  color: var(--text-secondary);
+}
+
+.name {
+  font-weight: 600;
+  color: #fff;
+}
+
+.handle a {
+  color: #3b82f6; /* Insta blue-ish */
+  text-decoration: none;
+}
+
+.handle a:hover {
+  text-decoration: underline;
+}
+
+.date {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+.statusBadge {
+  background: rgba(245, 158, 11, 0.1);
+  color: #f59e0b;
+  padding: 6px 12px;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.actions {
+  display: flex;
+  gap: 12px;
+}
+
+.btnApprove, .btnReject {
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  cursor: pointer;
+  border: none;
+  transition: opacity 0.2s ease;
+}
+
+.btnApprove {
+  background: rgba(16, 185, 129, 0.2);
+  color: #10b981;
+  border: 1px solid rgba(16, 185, 129, 0.5);
+}
+
+.btnReject {
+  background: rgba(239, 68, 68, 0.2);
+  color: #ef4444;
+  border: 1px solid rgba(239, 68, 68, 0.5);
+}
+
+.btnApprove:hover, .btnReject:hover {
+  opacity: 0.8;
+}

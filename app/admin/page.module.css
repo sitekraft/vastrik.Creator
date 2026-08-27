@@ -1,0 +1,139 @@
+.page {
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  margin-bottom: 40px;
+}
+
+.title {
+  font-size: 2rem;
+  color: #fff;
+  margin-bottom: 8px;
+}
+
+.subtitle {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+.kpiGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+  margin-bottom: 48px;
+}
+
+@media (min-width: 768px) {
+  .kpiGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1200px) {
+  .kpiGrid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.kpiCard {
+  background: var(--bg-card);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s ease;
+}
+
+.kpiCard:hover {
+  transform: translateY(-2px);
+  border-color: rgba(239, 68, 68, 0.2);
+}
+
+.kpiLabel {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 12px;
+}
+
+.kpiValue {
+  font-size: 2rem;
+  font-family: var(--font-heading);
+  color: #fff;
+  margin-bottom: 8px;
+}
+
+.kpiValue.alert {
+  color: #ef4444; /* Admin alert color */
+}
+
+.kpiTrend {
+  font-size: 0.7rem;
+  color: #10b981; /* Green for positive */
+}
+
+.kpiValue.alert + .kpiTrend {
+  color: #ef4444; /* Red for alert */
+}
+
+.recentActivity {
+  background: var(--bg-card);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 16px;
+  padding: 32px;
+}
+
+.sectionTitle {
+  font-size: 1.2rem;
+  margin-bottom: 24px;
+  color: #fff;
+}
+
+.alertList {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.alertItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.alertItem:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.alertIcon {
+  font-size: 1.2rem;
+  padding: 8px;
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 8px;
+}
+
+.alertContent {
+  display: flex;
+  flex-direction: column;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+.alertContent strong {
+  color: #fff;
+}
+
+.alertTime {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.3);
+  margin-top: 4px;
+}

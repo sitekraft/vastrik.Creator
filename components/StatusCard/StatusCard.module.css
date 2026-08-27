@@ -1,0 +1,191 @@
+.card {
+  background: var(--bg-card);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 24px;
+  padding: 48px;
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto 48px auto;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+}
+
+.tagWrapper {
+  margin-bottom: 24px;
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 6px 16px;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.icon {
+  font-size: 1rem;
+}
+
+.title {
+  font-size: 3.5rem;
+  line-height: 1.1;
+  margin-bottom: 16px;
+}
+
+.emoji {
+  font-size: 2.5rem;
+}
+
+.subtitle {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  line-height: 1.5;
+  max-width: 600px;
+  margin: 0 auto 48px auto;
+}
+
+.tracker {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 48px;
+  max-width: 500px;
+  margin: 0 auto 48px auto;
+}
+
+.step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  position: relative;
+  z-index: 2;
+}
+
+.circle {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--bg-dark);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+}
+
+.completed {
+  border-color: #a5f3fc;
+  color: #a5f3fc;
+  box-shadow: 0 0 10px rgba(165, 243, 252, 0.3);
+}
+
+.active {
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 15px rgba(217, 70, 239, 0.5);
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent-primary);
+}
+
+.label {
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  position: absolute;
+  top: 40px;
+  white-space: nowrap;
+}
+
+.completedLabel {
+  color: #a5f3fc;
+}
+
+.activeLabel {
+  color: var(--accent-primary);
+}
+
+.line {
+  flex: 1;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.1);
+  margin: 0 16px;
+  margin-top: -16px; /* align with circles */
+}
+
+.completedLine {
+  background: linear-gradient(90deg, #a5f3fc, var(--accent-primary));
+}
+
+.detailsGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  text-align: left;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  padding-top: 32px;
+}
+
+.detailItem {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.detailLabel {
+  font-size: 0.6rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.detailValue {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.detailValueBox {
+  display: inline-block;
+  background: rgba(165, 243, 252, 0.1);
+  color: #a5f3fc;
+  padding: 4px 12px;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  width: fit-content;
+}
+
+.statusBox {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(217, 70, 239, 0.1);
+  color: var(--accent-primary);
+  padding: 4px 12px;
+  border-radius: 6px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  width: fit-content;
+  letter-spacing: 0.05em;
+}
+
+.statusDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent-primary);
+  box-shadow: 0 0 8px var(--accent-primary);
+}

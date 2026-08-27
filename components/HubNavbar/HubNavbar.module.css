@@ -1,0 +1,13 @@
+.navbar {
+  padding: 24px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.logo {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 1.1rem;
+  color: #a5f3fc; /* Cyan-ish light blue from design */
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
