@@ -6,7 +6,7 @@ import Image from 'next/image';
 export default function AdminSubmissions() {
   const submissions = [
     { id: 'SUB-104', creator: 'Anshika', challenge: 'STYLE YOUR VASTRIK LOOK', date: '2 hours ago', img: '/dashboard_challenge.jpg' },
-    { id: 'SUB-105', creator: 'CyberKing', challenge: 'STREETWEAR VIBES', date: '5 hours ago', img: '/vastrik_promo.jpg' },
+    { id: 'SUB-105', creator: 'CyberKing', challenge: 'STREETWEAR VIBES', date: '5 hours ago', img: '/promo.jpg' },
     { id: 'SUB-106', creator: 'TechwearTom', challenge: 'STYLE YOUR VASTRIK LOOK', date: '1 day ago', img: '/apply_promo.jpg' },
   ];
 

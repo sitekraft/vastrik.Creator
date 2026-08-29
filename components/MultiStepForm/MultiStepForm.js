@@ -30,6 +30,27 @@ export default function MultiStepForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleNext = () => {
+    if (currentStep === 1) {
+      if (!formData.fullName || !formData.email || !formData.phone) {
+        alert('Please fill out all basic info fields.');
+        return;
+      }
+    }
+    
+    if (currentStep === 2) {
+      if (!formData.instagramHandle && !formData.youtubeHandle) {
+        alert('Please provide at least one social media handle (Instagram or YouTube).');
+        return;
+      }
+    }
+    
+    if (currentStep === 3) {
+      if (!formData.contentNiche || !formData.aesthetics) {
+        alert('Please select your primary niche and describe your aesthetic.');
+        return;
+      }
+    }
+
     if (currentStep < 4) setCurrentStep(currentStep + 1);
   };
 
@@ -84,20 +105,103 @@ export default function MultiStepForm() {
         {currentStep === 1 && (
           <div className={styles.placeholderCard}>
             <h3>Step 1: Basic Info</h3>
-            <input type="text" placeholder="Full Name" value={formData.fullName} onChange={(e) => setFormData({...formData, fullName: e.target.value})} className="btn-secondary" style={{display: 'block', margin: '10px 0', width: '100%', padding: '10px'}} />
-            <input type="email" placeholder="Email" value={formData.email} onChange={(e) => setFormData({...formData, email: e.target.value})} className="btn-secondary" style={{display: 'block', margin: '10px 0', width: '100%', padding: '10px'}} />
-            <button className="btn-primary" onClick={handleNext}>Next &rarr;</button>
+            <div className={styles.formGroup}>
+              <label className={styles.label}>Full Name</label>
+              <input type="text" placeholder="e.g. Rahul Sharma" value={formData.fullName} onChange={(e) => setFormData({...formData, fullName: e.target.value})} className={styles.input} />
+            </div>
+            <div className={styles.formGroup}>
+              <label className={styles.label}>Email Address</label>
+              <input type="email" placeholder="e.g. rahul@example.com" value={formData.email} onChange={(e) => setFormData({...formData, email: e.target.value})} className={styles.input} />
+            </div>
+            <div className={styles.formGroup}>
+              <label className={styles.label}>Phone Number</label>
+              <input type="tel" placeholder="e.g. 9876543210" value={formData.phone} onChange={(e) => setFormData({...formData, phone: e.target.value})} className={styles.input} />
+            </div>
+            <div className={styles.btnGroup}>
+              <button className="btn-primary" onClick={handleNext}>Next &rarr;</button>
+            </div>
           </div>
         )}
+        
         {currentStep === 2 && (
           <div className={styles.placeholderCard}>
             <h3>Step 2: Profile (Socials)</h3>
-            <input type="text" placeholder="Instagram Handle" value={formData.instagramHandle} onChange={(e) => setFormData({...formData, instagramHandle: e.target.value})} className="btn-secondary" style={{display: 'block', margin: '10px 0', width: '100%', padding: '10px'}} />
-            <button className="btn-primary" onClick={handleNext}>Next &rarr;</button>
+            <div className={styles.formGroup}>
+              <label className={styles.label}>Instagram Handle</label>
+              <input type="text" placeholder="@yourhandle" value={formData.instagramHandle} onChange={(e) => setFormData({...formData, instagramHandle: e.target.value})} className={styles.input} />
+            </div>
+            <div className={styles.formGroup}>
+              <label className={styles.label}>YouTube Handle (Optional)</label>
+              <input type="text" placeholder="@yourhandle" value={formData.youtubeHandle} onChange={(e) => setFormData({...formData, youtubeHandle: e.target.value})} className={styles.input} />
+            </div>
+            <div className={styles.btnGroup}>
+              <button className="btn-secondary" onClick={() => setCurrentStep(1)}>&larr; Back</button>
+              <button className="btn-primary" onClick={handleNext}>Next &rarr;</button>
+            </div>
           </div>
         )}
-        {currentStep === 3 && <div className={styles.placeholderCard}><h3>Step 3: Content</h3><button className="btn-primary" onClick={handleNext}>Next &rarr;</button></div>}
-        {currentStep === 4 && <div className={styles.placeholderCard}><h3>Step 4: Review</h3><button className="btn-primary" disabled={isSubmitting} onClick={handleSubmit}>{isSubmitting ? 'Submitting...' : 'Submit &rarr;'}</button></div>}
+        
+        {currentStep === 3 && (
+          <div className={styles.placeholderCard}>
+            <h3>Step 3: Content & Aesthetics</h3>
+            <div className={styles.formGroup}>
+              <label className={styles.label}>Primary Niche</label>
+              <select value={formData.contentNiche} onChange={(e) => setFormData({...formData, contentNiche: e.target.value})} className={styles.input}>
+                <option value="">Select Niche...</option>
+                <option value="Streetwear">Streetwear</option>
+                <option value="High Fashion">High Fashion</option>
+                <option value="Casual/Everyday">Casual/Everyday</option>
+                <option value="Cosplay/Alternative">Cosplay/Alternative</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+            <div className={styles.formGroup}>
+              <label className={styles.label}>Describe Your Aesthetic</label>
+              <textarea placeholder="Tell us about your style and vibe..." value={formData.aesthetics} onChange={(e) => setFormData({...formData, aesthetics: e.target.value})} className={styles.textarea}></textarea>
+            </div>
+            <div className={styles.formGroup}>
+              <label className={styles.label}>Portfolio Link (Optional)</label>
+              <input type="url" placeholder="Link to your best work or media kit" value={formData.portfolioLink} onChange={(e) => setFormData({...formData, portfolioLink: e.target.value})} className={styles.input} />
+            </div>
+            <div className={styles.btnGroup}>
+              <button className="btn-secondary" onClick={() => setCurrentStep(2)}>&larr; Back</button>
+              <button className="btn-primary" onClick={handleNext}>Next &rarr;</button>
+            </div>
+          </div>
+        )}
+        
+        {currentStep === 4 && (
+          <div className={styles.placeholderCard}>
+            <h3>Step 4: Review Application</h3>
+            
+            <div className={styles.reviewItem}>
+              <div className={styles.reviewLabel}>Full Name & Email</div>
+              <div className={styles.reviewValue}>{formData.fullName || '-'} | {formData.email || '-'}</div>
+            </div>
+            
+            <div className={styles.reviewItem}>
+              <div className={styles.reviewLabel}>Social Handles</div>
+              <div className={styles.reviewValue}>IG: {formData.instagramHandle || '-'} | YT: {formData.youtubeHandle || '-'}</div>
+            </div>
+            
+            <div className={styles.reviewItem}>
+              <div className={styles.reviewLabel}>Content Niche</div>
+              <div className={styles.reviewValue}>{formData.contentNiche || '-'}</div>
+            </div>
+            
+            <div className={styles.reviewItem}>
+              <div className={styles.reviewLabel}>Aesthetic</div>
+              <div className={styles.reviewValue}>{formData.aesthetics || '-'}</div>
+            </div>
+            
+            <div className={styles.btnGroup}>
+              <button className="btn-secondary" onClick={() => setCurrentStep(3)}>&larr; Back</button>
+              <button className="btn-primary" disabled={isSubmitting} onClick={handleSubmit}>
+                {isSubmitting ? 'Submitting...' : 'Submit Application &rarr;'}
+              </button>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

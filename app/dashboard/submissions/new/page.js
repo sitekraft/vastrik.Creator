@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import styles from './page.module.css';
 
@@ -15,13 +15,7 @@ export default function NewSubmission() {
     description: ''
   });
 
-  import('react').then(({ useEffect }) => {
-    useEffect(() => {
-      fetch('/api/admin/challenges').then(r => r.json()).then(data => {
-        if(data.success) setChallenges(data.challenges);
-      });
-    }, []);
-  });
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();

@@ -24,7 +24,7 @@ export async function POST(request) {
       rewardPool: body.rewardPool,
       startDate: body.startDate,
       endDate: body.endDate,
-      coverImage: body.coverImage || '/vastrik_promo.jpg'
+      coverImage: body.coverImage || '/promo.jpg'
     });
     
     await newChallenge.save();
