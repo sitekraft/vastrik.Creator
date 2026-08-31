@@ -64,12 +64,13 @@ export default function MultiStepForm() {
       });
       const data = await res.json();
       if (data.success) {
-        const query = new URLSearchParams({
-          id: data.applicationId,
-          email: data.email,
-          date: data.date
-        }).toString();
-        router.push(`/status?${query}`);
+        if (typeof window !== 'undefined') {
+          localStorage.setItem('vastrik_creator_email', formData.email);
+          if (data.applicationId) {
+            localStorage.setItem('vastrik_creator_app_id', data.applicationId);
+          }
+        }
+        router.push('/status?email=' + encodeURIComponent(formData.email));
       } else {
         alert(data.message || 'Something went wrong. Please try again.');
       }
@@ -77,6 +78,7 @@ export default function MultiStepForm() {
       console.error(error);
       alert('Error submitting application.');
     } finally {
+
       setIsSubmitting(false);
     }
   };

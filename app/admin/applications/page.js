@@ -24,11 +24,27 @@ export default function AdminApplications() {
     fetchApps();
   }, []);
 
-  const handleStatusChange = async (id, status, e) => {
-    // In a real app, you'd send a PUT request to update the status in the DB here
-    e.target.parentElement.parentElement.parentElement.style.opacity = '0.5';
-    alert(`Application ${status}!`);
+  const handleStatusChange = async (id, newStatus, e) => {
+    try {
+      const res = await fetch('/api/admin/applications', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id, status: newStatus })
+      });
+      const data = await res.json();
+      if (data.success) {
+        setApplications(prev => prev.map(app => 
+          app._id === id ? { ...app, status: newStatus } : app
+        ));
+      } else {
+        alert('Failed to update status: ' + data.message);
+      }
+    } catch (err) {
+      console.error(err);
+      alert('Error updating application status.');
+    }
   };
+
 
   return (
     <div className={styles.page}>

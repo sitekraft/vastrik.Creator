@@ -7,24 +7,26 @@ export default function Hero() {
       <div className="container">
         <div className={styles.content}>
           <div className={styles.tag}>
-            <span className={styles.icon}>🔥</span> THE ULTIMATE CREATOR CHALLENGE
+            <span className={styles.icon}>✨</span> DESIGN • STITCH • WEAR
           </div>
           <h1 className={styles.title}>
-            CREATE.<br />
-            <span className="gradient-text">SHOW YOUR STYLE.</span><br />
-            WIN BIG.
+            WEAR YOUR IMAGINATION.<br />
+            <span className="gradient-text">GET PAID TO CREATE.</span>
           </h1>
           <p className={styles.subtitle}>
-            Join the most exclusive fashion creator network. Participate in challenges, elevate your unique aesthetic, and unlock massive rewards.
+            Join India's premier bespoke fashion creator network. Showcase 100% custom-fit Karigar craftsmanship, bring viral Pinterest sketches to life, and earn guaranteed payouts for your views.
           </p>
           <div className={styles.actions}>
             <Link href="/apply" className="btn-primary">
-              Apply Now &rarr;
+              Apply as Creator &rarr;
             </Link>
-            <a href="#how-it-works" className="btn-secondary" style={{ textDecoration: 'none', display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>How it Works</a>
+            <a href="#how-it-works" className="btn-secondary" style={{ textDecoration: 'none', display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>
+              How It Works
+            </a>
           </div>
         </div>
       </div>
     </section>
   );
 }
+
