@@ -7,6 +7,15 @@ export async function POST(request) {
   try {
     const body = await request.json();
     
+    // Check if application with this email already exists
+    const existingApplication = await Application.findOne({ email: body.email });
+    if (existingApplication) {
+      return NextResponse.json(
+        { message: 'An application with this email already exists. You can only apply once.', success: false },
+        { status: 400 }
+      );
+    }
+    
     let appId = null;
 
     try {

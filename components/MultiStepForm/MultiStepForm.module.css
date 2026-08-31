@@ -141,6 +141,11 @@
   background: rgba(255, 255, 255, 0.05);
 }
 
+.input option {
+  background-color: #1a1a2e; /* dark background */
+  color: #ffffff;
+}
+
 .textarea {
   resize: vertical;
   min-height: 100px;

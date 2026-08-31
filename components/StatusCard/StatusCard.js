@@ -134,7 +134,7 @@ export default function StatusCard() {
               <div className={`${styles.circle} ${appData.status === 'Approved' ? styles.completed : appData.status === 'Rejected' ? styles.rejected : styles.active}`}>
                 {appData.status === 'Approved' ? '✓' : appData.status === 'Rejected' ? '✕' : <span className={styles.dot}></span>}
               </div>
-              <span className={`${styles.label} ${appData.status === 'Approved' ? styles.completedLabel : styles.activeLabel}`}>
+              <span className={`${styles.label} ${appData.status === 'Approved' ? styles.completedLabel : appData.status === 'Rejected' ? styles.rejectedLabel : styles.activeLabel}`}>
                 {appData.status === 'Approved' ? 'Approved' : appData.status === 'Rejected' ? 'Declined' : 'In Review'}
               </span>
             </div>
