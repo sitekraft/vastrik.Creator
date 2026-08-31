@@ -4,29 +4,30 @@ export default function CommandLog() {
   const logs = [
     {
       icon: '📢',
-      title: 'New challenge available:',
-      highlight: 'STREETWEAR VIBES',
+      title: 'New mission brief live:',
+      highlight: 'PINTEREST & CELEB LOOK DECONSTRUCT',
+      time: 'Live Now'
+    },
+    {
+      icon: '⚡',
+      title: 'Zero-Inventory UGC active on',
+      highlight: 'vastrik.store (#analyzer)',
       time: '2 hours ago'
     },
     {
-      icon: '✅',
-      title: 'Submission approved for',
-      highlight: 'NEON NIGHTS',
-      time: '5 hours ago'
-    },
-    {
-      icon: '📈',
-      title: 'Milestone reached: 50K',
-      highlight: 'Total Views',
+      icon: '💰',
+      title: 'Milestone tier unlocked:',
+      highlight: '₹5,000 / 1M+ Views',
       time: '1 day ago'
     },
     {
-      icon: '⭐',
-      title: 'Rank increased to',
-      highlight: 'Elite',
-      time: '2 days ago'
+      icon: '✅',
+      title: 'Creator Atelier status:',
+      highlight: 'Verified Creator',
+      time: 'Active'
     }
   ];
+
 
   return (
     <div className={styles.card}>

@@ -25,7 +25,8 @@ export default function Sidebar() {
         </div>
         <div className={styles.profileInfo}>
           <div className={styles.name}>Vastrik Creator</div>
-          <div className={styles.rank}>Rank: Elite</div>
+          <div className={styles.rank}>Atelier Creator ⭐</div>
+
         </div>
       </div>
 
