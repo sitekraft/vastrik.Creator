@@ -2,21 +2,42 @@ import styles from './Playbook.module.css';
 
 export default function Playbook() {
   const steps = [
-    { num: '01', icon: '📝', title: 'APPLY & GET SELECTED', desc: 'Submit your profile and prove you have what it takes to join the elite roster.' },
-    { num: '02', icon: '⚡', title: 'PICK A CHALLENGE', desc: 'Browse active fashion missions tailored to different aesthetics and styles.' },
-    { num: '03', icon: '🎥', title: 'CREATE & SUBMIT', desc: 'Produce high-quality content that captures your unique vibe and fits the brief.' },
-    { num: '04', icon: '🏆', title: 'WIN REWARDS', desc: 'Get featured, earn massive cash prizes, and unlock exclusive brand deals.' },
+    { 
+      num: '01', 
+      icon: '✨', 
+      title: 'APPLY & GET APPROVED', 
+      desc: 'Submit your profile & fashion aesthetic to join the verified Vastrik Creator Atelier.' 
+    },
+    { 
+      num: '02', 
+      icon: '🎨', 
+      title: 'SELECT A CAMPAIGN BRIEF', 
+      desc: 'Choose from trending creator missions like "Pinterest to Reality", "Fit Test", or "AI Sketch to Stitch".' 
+    },
+    { 
+      num: '03', 
+      icon: '🎥', 
+      title: 'CREATE & POST CONTENT', 
+      desc: 'Record your reaction, Pinterest breakdown, or AI sketch test, tag #Vastrik (@vastrik.store), and post to Reels/Shorts.' 
+    },
+
+    { 
+      num: '04', 
+      icon: '💰', 
+      title: 'EARN DIRECT FOR VIEWS', 
+      desc: 'Receive transparent, guaranteed milestone payouts directly into your UPI/Bank as your views grow.' 
+    },
   ];
 
   return (
     <section className={styles.section} id="how-it-works">
       <div className="container">
         <div className={styles.header}>
-          <h2 className={styles.title}>THE MISSION<br/>PLAYBOOK</h2>
-          <p className={styles.subtitle}>Follow the path to creator glory.</p>
+          <h2 className={styles.title}>THE CREATOR<br /><span className="gradient-text">PLAYBOOK</span></h2>
+          <p className={styles.subtitle}>Follow the simple 4-step path to creator growth & earnings.</p>
         </div>
 
-        <div className={styles.timeline}>
+        <div className={styles.grid}>
           {steps.map((step, idx) => (
             <div key={idx} className={styles.card}>
               <div className={styles.iconWrapper}>
@@ -34,3 +55,5 @@ export default function Playbook() {
     </section>
   );
 }
+
+
