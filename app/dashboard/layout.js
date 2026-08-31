@@ -9,7 +9,7 @@ import Link from 'next/link';
 export default function DashboardLayout({ children }) {
   const { data: session, status } = useSession();
   const [hasAccess, setHasAccess] = useState(false);
-  const [checkingAccess, setCheckingAccess] = useState(true);
+  const [checkingAccess, setCheckingAccess] = useState(false);
   const [creatorEmail, setCreatorEmail] = useState('');
   const [unlockEmailInput, setUnlockEmailInput] = useState('');
   const [unlockError, setUnlockError] = useState('');
@@ -20,11 +20,10 @@ export default function DashboardLayout({ children }) {
       // 1. Check if user is authenticated via NextAuth session
       if (session) {
         setHasAccess(true);
-        setCheckingAccess(false);
         return;
       }
 
-      // 2. Check if user has an approved email stored locally
+      // 2. Check if user has an approved email stored in localStorage
       if (typeof window !== 'undefined') {
         const storedEmail = localStorage.getItem('vastrik_creator_email');
         if (storedEmail) {
@@ -34,19 +33,19 @@ export default function DashboardLayout({ children }) {
             const data = await res.json();
             if (data.success && data.application && data.application.status === 'Approved') {
               setHasAccess(true);
+            } else {
+              setHasAccess(false);
             }
           } catch (e) {
             console.error('Access verification error', e);
           }
         }
       }
-      setCheckingAccess(false);
     }
 
-    if (status !== 'loading') {
-      verifyAccess();
-    }
+    verifyAccess();
   }, [session, status]);
+
 
   const handleUnlockWithEmail = async (e) => {
     e.preventDefault();
