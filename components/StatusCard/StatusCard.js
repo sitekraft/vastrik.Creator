@@ -1,6 +1,13 @@
 import styles from './StatusCard.module.css';
 
-export default function StatusCard() {
+export default function StatusCard({ searchParams }) {
+  const id = searchParams?.id || 'VST-99201';
+  const email = searchParams?.email || 'creator@example.com';
+  
+  let displayDate = 'Oct 24, 2024';
+  if (searchParams?.date) {
+    displayDate = new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric', year: 'numeric' }).format(new Date(searchParams.date));
+  }
   return (
     <div className={styles.card}>
       <div className={styles.tagWrapper}>
@@ -39,15 +46,15 @@ export default function StatusCard() {
       <div className={styles.detailsGrid}>
         <div className={styles.detailItem}>
           <span className={styles.detailLabel}>APPLICATION ID</span>
-          <span className={styles.detailValueBox}>#VST-99201</span>
+          <span className={styles.detailValueBox}>#{id.substring(id.length - 6).toUpperCase()}</span>
         </div>
         <div className={styles.detailItem}>
           <span className={styles.detailLabel}>SUBMISSION DATE</span>
-          <span className={styles.detailValue}>Oct 24, 2024</span>
+          <span className={styles.detailValue}>{displayDate}</span>
         </div>
         <div className={styles.detailItem}>
           <span className={styles.detailLabel}>REGISTERED EMAIL</span>
-          <span className={styles.detailValue}>creator@example.com</span>
+          <span className={styles.detailValue}>{email}</span>
         </div>
         <div className={styles.detailItem}>
           <span className={styles.detailLabel}>CURRENT STATUS</span>

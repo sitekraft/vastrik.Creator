@@ -64,9 +64,14 @@ export default function MultiStepForm() {
       });
       const data = await res.json();
       if (data.success) {
-        router.push('/status');
+        const query = new URLSearchParams({
+          id: data.applicationId,
+          email: data.email,
+          date: data.date
+        }).toString();
+        router.push(`/status?${query}`);
       } else {
-        alert('Something went wrong. Please try again.');
+        alert(data.message || 'Something went wrong. Please try again.');
       }
     } catch (error) {
       console.error(error);
@@ -148,10 +153,13 @@ export default function MultiStepForm() {
               <label className={styles.label}>Primary Niche</label>
               <select value={formData.contentNiche} onChange={(e) => setFormData({...formData, contentNiche: e.target.value})} className={styles.input}>
                 <option value="">Select Niche...</option>
+                <option value="Fashion artist">Fashion artist</option>
+                <option value="Content creator">Content creator</option>
+                <option value="Reel creator">Reel creator</option>
+                <option value="Digital creator">Digital creator</option>
+                <option value="Clothing">Clothing</option>
                 <option value="Streetwear">Streetwear</option>
                 <option value="High Fashion">High Fashion</option>
-                <option value="Casual/Everyday">Casual/Everyday</option>
-                <option value="Cosplay/Alternative">Cosplay/Alternative</option>
                 <option value="Other">Other</option>
               </select>
             </div>
@@ -197,7 +205,7 @@ export default function MultiStepForm() {
             <div className={styles.btnGroup}>
               <button className="btn-secondary" onClick={() => setCurrentStep(3)}>&larr; Back</button>
               <button className="btn-primary" disabled={isSubmitting} onClick={handleSubmit}>
-                {isSubmitting ? 'Submitting...' : 'Submit Application &rarr;'}
+                {isSubmitting ? 'Submitting...' : 'Submit Application →'}
               </button>
             </div>
           </div>
