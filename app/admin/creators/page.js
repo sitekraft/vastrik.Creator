@@ -1,14 +1,29 @@
+'use client';
+
+import { useState, useEffect } from 'react';
 import styles from './page.module.css';
 import Link from 'next/link';
 
 export default function AdminCreators() {
-  const creators = [
-    { id: 'CR-001', name: 'CyberKing', rank: 'Icon', points: '1.2M', status: 'Active' },
-    { id: 'CR-002', name: 'NeonQueen', rank: 'Icon', points: '980K', status: 'Active' },
-    { id: 'CR-003', name: 'TechwearTom', rank: 'Icon', points: '850K', status: 'Active' },
-    { id: 'CR-012', name: 'Vastrik Creator', rank: 'Elite', points: '245K', status: 'Active' },
-    { id: 'CR-099', name: 'SpamBot99', rank: 'Newbie', points: '0', status: 'Suspended' },
-  ];
+  const [creators, setCreators] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchCreators() {
+      try {
+        const res = await fetch('/api/admin/creators');
+        const data = await res.json();
+        if (data.success && data.creators) {
+          setCreators(data.creators);
+        }
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchCreators();
+  }, []);
 
   return (
     <div className={styles.page}>
@@ -35,26 +50,32 @@ export default function AdminCreators() {
             </tr>
           </thead>
           <tbody>
-            {creators.map((creator) => (
-              <tr key={creator.id}>
-                <td className={styles.id}>{creator.id}</td>
-                <td className={styles.name}>{creator.name}</td>
-                <td>
-                  <span className={`${styles.rankBadge} ${styles[creator.rank.toLowerCase()]}`}>
-                    {creator.rank}
-                  </span>
-                </td>
-                <td className={styles.points}>{creator.points}</td>
-                <td>
-                  <span className={`${styles.statusBadge} ${styles[creator.status.toLowerCase()]}`}>
-                    {creator.status}
-                  </span>
-                </td>
-                <td>
-                  <Link href={`/admin/creators/${creator.id}`} className={styles.actionBtn} style={{textDecoration: 'none', display: 'inline-block'}}>Manage</Link>
-                </td>
-              </tr>
-            ))}
+            {loading ? (
+              <tr><td colSpan="6" style={{textAlign: 'center', padding: '20px'}}>Loading creators...</td></tr>
+            ) : creators.length === 0 ? (
+              <tr><td colSpan="6" style={{textAlign: 'center', padding: '20px', color: 'var(--text-secondary)'}}>No creators found.</td></tr>
+            ) : (
+              creators.map((creator) => (
+                <tr key={creator._id}>
+                  <td className={styles.id}>#{creator._id.slice(-6).toUpperCase()}</td>
+                  <td className={styles.name}>{creator.name}</td>
+                  <td>
+                    <span className={`${styles.rankBadge} ${styles[(creator.rank || 'Newbie').toLowerCase()]}`}>
+                      {creator.rank || 'Newbie'}
+                    </span>
+                  </td>
+                  <td className={styles.points}>{creator.points || 0}</td>
+                  <td>
+                    <span className={`${styles.statusBadge} ${styles[(creator.status || 'Active').toLowerCase()]}`}>
+                      {creator.status || 'Active'}
+                    </span>
+                  </td>
+                  <td>
+                    <Link href={`/admin/creators/${creator._id}`} className={styles.actionBtn} style={{textDecoration: 'none', display: 'inline-block'}}>Manage</Link>
+                  </td>
+                </tr>
+              ))
+            )}
           </tbody>
         </table>
       </div>

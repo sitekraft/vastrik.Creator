@@ -14,7 +14,9 @@ const UserSchema = new mongoose.Schema({
     accountNumber: String,
     ifscCode: String,
     upiId: String
-  }
+  },
+  resetToken: { type: String },
+  resetTokenExpiry: { type: Date }
 }, { timestamps: true });
 
 export default mongoose.models.User || mongoose.model('User', UserSchema);

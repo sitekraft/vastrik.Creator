@@ -92,10 +92,14 @@ export default function AdminApplications() {
                     </span>
                   </td>
                   <td>
-                    <div className={styles.actions}>
-                      <button className={styles.btnApprove} onClick={(e) => handleStatusChange(app._id, 'Approved', e)}>Approve</button>
-                      <button className={styles.btnReject} onClick={(e) => handleStatusChange(app._id, 'Rejected', e)}>Reject</button>
-                    </div>
+                    {app.status === 'Pending' ? (
+                      <div className={styles.actions}>
+                        <button className={styles.btnApprove} onClick={(e) => handleStatusChange(app._id, 'Approved', e)}>Approve</button>
+                        <button className={styles.btnReject} onClick={(e) => handleStatusChange(app._id, 'Rejected', e)}>Reject</button>
+                      </div>
+                    ) : (
+                      <span style={{ color: 'var(--text-secondary)', fontSize: '0.85rem' }}>{app.status}</span>
+                    )}
                   </td>
                 </tr>
               ))

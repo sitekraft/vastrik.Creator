@@ -1,16 +1,33 @@
+'use client';
+
+import { useState, useEffect } from 'react';
 import styles from './page.module.css';
 
 export default function LeaderboardPage() {
-  const leaders = [
-    { rank: 1, name: 'CyberKing', points: '1.2M', tier: 'Icon' },
-    { rank: 2, name: 'NeonQueen', points: '980K', tier: 'Icon' },
-    { rank: 3, name: 'TechwearTom', points: '850K', tier: 'Icon' },
-    { rank: 4, name: 'StreetStyle', points: '720K', tier: 'Elite' },
-    { rank: 5, name: 'FutureFashion', points: '690K', tier: 'Elite' },
-    { rank: 11, name: 'GamerAesthetic', points: '310K', tier: 'Elite' },
-    { rank: 12, name: 'Vastrik Creator (You)', points: '245K', tier: 'Elite', isCurrentUser: true },
-    { rank: 13, name: 'HypeBeast', points: '210K', tier: 'Rising Star' },
-  ];
+  const [leaders, setLeaders] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [currentCreatorName, setCurrentCreatorName] = useState('');
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      setCurrentCreatorName(localStorage.getItem('vastrik_creator_name') || '');
+    }
+
+    async function fetchLeaderboard() {
+      try {
+        const res = await fetch('/api/leaderboard');
+        const data = await res.json();
+        if (data.success && data.leaders) {
+          setLeaders(data.leaders);
+        }
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchLeaderboard();
+  }, []);
 
   return (
     <div className={styles.page}>
@@ -30,25 +47,37 @@ export default function LeaderboardPage() {
             </tr>
           </thead>
           <tbody>
-            {leaders.map((leader, idx) => (
-              <tr key={idx} className={leader.isCurrentUser ? styles.highlightRow : ''}>
-                <td>
-                  <span className={`${styles.rank} ${leader.rank <= 3 ? styles.topRank : ''}`}>
-                    #{leader.rank}
-                  </span>
-                </td>
-                <td className={styles.creatorCell}>
-                  <div className={styles.avatar}></div>
-                  <span className={styles.name}>{leader.name}</span>
-                </td>
-                <td>
-                  <span className={`${styles.tier} ${styles[leader.tier.toLowerCase().replace(' ', '')]}`}>
-                    {leader.tier}
-                  </span>
-                </td>
-                <td className={styles.points}>{leader.points}</td>
-              </tr>
-            ))}
+            {loading ? (
+              <tr><td colSpan="4" style={{textAlign: 'center', padding: '20px'}}>Loading leaderboard...</td></tr>
+            ) : leaders.length === 0 ? (
+              <tr><td colSpan="4" style={{textAlign: 'center', padding: '20px', color: 'var(--text-secondary)'}}>No creators have earned points yet.</td></tr>
+            ) : (
+              leaders.map((leader, idx) => {
+                const rank = idx + 1;
+                const isCurrentUser = currentCreatorName && leader.name === currentCreatorName;
+                const displayName = isCurrentUser ? `${leader.name} (You)` : leader.name;
+                
+                return (
+                  <tr key={leader._id} className={isCurrentUser ? styles.highlightRow : ''}>
+                    <td>
+                      <span className={`${styles.rank} ${rank <= 3 ? styles.topRank : ''}`}>
+                        #{rank}
+                      </span>
+                    </td>
+                    <td className={styles.creatorCell}>
+                      <div className={styles.avatar}></div>
+                      <span className={styles.name}>{displayName}</span>
+                    </td>
+                    <td>
+                      <span className={`${styles.tier} ${styles[(leader.rank || 'Newbie').toLowerCase().replace(' ', '')]}`}>
+                        {leader.rank || 'Newbie'}
+                      </span>
+                    </td>
+                    <td className={styles.points}>{leader.points ? leader.points.toLocaleString() : '0'}</td>
+                  </tr>
+                );
+              })
+            )}
           </tbody>
         </table>
       </div>

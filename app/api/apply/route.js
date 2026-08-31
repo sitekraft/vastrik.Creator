@@ -6,20 +6,19 @@ import { inMemoryStore } from '@/lib/inMemoryStore';
 export async function POST(request) {
   try {
     const body = await request.json();
-    
-    // Check if application with this email already exists
-    const existingApplication = await Application.findOne({ email: body.email });
-    if (existingApplication) {
-      return NextResponse.json(
-        { message: 'An application with this email already exists. You can only apply once.', success: false },
-        { status: 400 }
-      );
-    }
-    
     let appId = null;
 
     try {
       await dbConnect();
+      
+      // Check if application with this email already exists
+      const existingApplication = await Application.findOne({ email: body.email });
+      if (existingApplication) {
+        return NextResponse.json(
+          { message: 'An application with this email already exists. You can only apply once.', success: false },
+          { status: 400 }
+        );
+      }
       
       const newApplication = new Application({
         fullName: body.fullName,
@@ -35,7 +34,17 @@ export async function POST(request) {
       await newApplication.save();
       appId = newApplication._id.toString();
     } catch (dbErr) {
-      console.warn('MongoDB offline, saving to in-memory store:', dbErr.message);
+      console.warn('MongoDB offline or error, saving to in-memory store:', dbErr.message);
+      
+      // Check duplicate in memory store
+      const existingInMem = inMemoryStore.submissions.find(app => app.email === body.email) || inMemoryStore.getApplications().find(app => app.email === body.email);
+      if (existingInMem) {
+        return NextResponse.json(
+          { message: 'An application with this email already exists. You can only apply once.', success: false },
+          { status: 400 }
+        );
+      }
+      
       const saved = inMemoryStore.addApplication(body);
       appId = saved._id;
     }

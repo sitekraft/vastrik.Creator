@@ -39,6 +39,13 @@ export async function POST(request) {
       inMemoryStore.addSubmission(body);
     }
 
+    return NextResponse.json({ message: 'Submission created successfully', success: true });
+  } catch (error) {
+    console.error('Create Submission Error:', error);
+    return NextResponse.json({ message: 'Internal Server Error', success: false }, { status: 500 });
+  }
+}
+
 export async function PATCH(request) {
   try {
     const body = await request.json();

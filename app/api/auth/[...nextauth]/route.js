@@ -17,11 +17,21 @@ export const authOptions = {
         await dbConnect();
         
         // Find user
-        const user = await User.findOne({ email: credentials.email });
+        let user = await User.findOne({ email: credentials.email });
         
+        // Auto-seed admin if trying to login and doesn't exist
+        if (!user && credentials.email === 'vastrik.support@gmail.com' && credentials.role === 'admin') {
+           const hashedPassword = await bcrypt.hash('owner@vastrik.com', 10);
+           user = new User({
+             name: 'Vastrik Admin',
+             email: 'vastrik.support@gmail.com',
+             password: hashedPassword,
+             role: 'admin'
+           });
+           await user.save();
+        }
+
         if (!user) {
-          // If no user found, and it's for testing, we can create one dynamically
-          // Or just throw an error. For this prototype, we'll return an error.
           throw new Error('No user found with this email');
         }
         

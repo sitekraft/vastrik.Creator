@@ -32,6 +32,9 @@ export default function DashboardLayout({ children }) {
             const res = await fetch(`/api/status?q=${encodeURIComponent(storedEmail)}`);
             const data = await res.json();
             if (data.success && data.application && data.application.status === 'Approved') {
+              if (typeof window !== 'undefined') {
+                localStorage.setItem('vastrik_creator_name', data.application.fullName);
+              }
               setHasAccess(true);
             } else {
               setHasAccess(false);
@@ -60,6 +63,7 @@ export default function DashboardLayout({ children }) {
         if (data.application.status === 'Approved') {
           if (typeof window !== 'undefined') {
             localStorage.setItem('vastrik_creator_email', data.application.email);
+            localStorage.setItem('vastrik_creator_name', data.application.fullName);
           }
           setHasAccess(true);
         } else {

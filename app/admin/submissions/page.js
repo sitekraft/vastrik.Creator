@@ -13,14 +13,10 @@ export default function AdminSubmissions() {
       try {
         const res = await fetch('/api/submissions');
         const data = await res.json();
-        if (data.success && data.submissions.length > 0) {
+        if (data.success && data.submissions) {
           setSubmissions(data.submissions);
         } else {
-          // Fallback sample data if empty
-          setSubmissions([
-            { _id: 'SUB-101', creatorName: 'Aarav Mehta', challengeTitle: 'PINTEREST & CELEB LOOK DECONSTRUCT', contentLink: 'https://instagram.com/reel/vastrik_demo_1', createdAt: new Date().toISOString(), imageUrl: '/dashboard_challenge.jpg', status: 'Pending' },
-            { _id: 'SUB-102', creatorName: 'Priya Sharma', challengeTitle: 'AI SKETCH ANALYZER TEST & REACTION', contentLink: 'https://youtube.com/shorts/vastrik_demo_2', createdAt: new Date(Date.now() - 3600000).toISOString(), imageUrl: '/promo.jpg', status: 'Pending' },
-          ]);
+          setSubmissions([]);
         }
       } catch (err) {
         console.error(err);
@@ -60,6 +56,8 @@ export default function AdminSubmissions() {
 
       {loading ? (
         <p style={{ textAlign: 'center', padding: '40px' }}>Loading submissions...</p>
+      ) : submissions.length === 0 ? (
+        <p style={{ textAlign: 'center', padding: '40px', color: 'var(--text-secondary)' }}>No submissions found.</p>
       ) : (
         <div className={styles.grid}>
           {submissions.map((sub) => (

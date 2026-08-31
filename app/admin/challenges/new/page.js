@@ -13,8 +13,22 @@ export default function NewChallenge() {
     startDate: '',
     endDate: '',
     rewardPool: '',
-    description: ''
+    description: '',
+    coverImage: ''
   });
+  const [imagePreview, setImagePreview] = useState(null);
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImagePreview(reader.result);
+        setFormData({ ...formData, coverImage: reader.result });
+      };
+      reader.readAsDataURL(file);
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -72,10 +86,25 @@ export default function NewChallenge() {
 
         <div className={styles.formGroup}>
           <label className={styles.label}>Cover Image</label>
-          <div className={styles.uploadArea}>
-            <span className={styles.uploadIcon}>🖼️</span>
-            <p>Upload a promotional banner</p>
-            <input type="file" className={styles.fileInput} accept="image/*" />
+          <div className={styles.uploadArea} style={{ position: 'relative', overflow: 'hidden' }}>
+            {imagePreview ? (
+              <div style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+                <img src={imagePreview} alt="Cover Preview" style={{ maxHeight: '150px', objectFit: 'contain', borderRadius: '8px' }} />
+                <p style={{ marginTop: '10px', fontSize: '0.8rem', color: '#a5f3fc' }}>Click to change image</p>
+              </div>
+            ) : (
+              <>
+                <span className={styles.uploadIcon}>🖼️</span>
+                <p>Upload a promotional banner</p>
+              </>
+            )}
+            <input 
+              type="file" 
+              className={styles.fileInput} 
+              accept="image/*" 
+              onChange={handleImageChange}
+              style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', opacity: 0, cursor: 'pointer' }}
+            />
           </div>
         </div>
 

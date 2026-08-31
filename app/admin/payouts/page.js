@@ -1,14 +1,32 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import styles from './page.module.css';
 
 export default function AdminPayouts() {
-  const payouts = [
-    { id: 'PAY-882', creator: 'CyberKing', amount: '₹50,000', method: 'Bank Transfer', requestDate: '2026-08-25', status: 'Pending' },
-    { id: 'PAY-883', creator: 'TechwearTom', amount: '₹25,000', method: 'UPI', requestDate: '2026-08-26', status: 'Pending' },
-    { id: 'PAY-880', creator: 'NeonQueen', amount: '₹10,000', method: 'Bank Transfer', requestDate: '2026-08-20', status: 'Completed' },
-    { id: 'PAY-879', creator: 'Vastrik Creator', amount: '₹15,000', method: 'UPI', requestDate: '2026-08-18', status: 'Completed' },
-  ];
+  const [payouts, setPayouts] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchPayouts() {
+      try {
+        const res = await fetch('/api/admin/payouts');
+        const data = await res.json();
+        if (data.success && data.payouts) {
+          setPayouts(data.payouts);
+        }
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchPayouts();
+  }, []);
+
+  const totalPending = payouts
+    .filter(p => p.status === 'Pending')
+    .reduce((sum, p) => sum + (parseFloat(p.amount.toString().replace(/[^0-9.-]+/g,"")) || 0), 0);
 
   return (
     <div className={styles.page}>
@@ -19,7 +37,7 @@ export default function AdminPayouts() {
         </div>
         <div className={styles.totalPending}>
           <span className={styles.pendingLabel}>Total Pending</span>
-          <span className={styles.pendingAmount}>₹75,000</span>
+          <span className={styles.pendingAmount}>₹{totalPending.toLocaleString()}</span>
         </div>
       </header>
 
@@ -37,27 +55,33 @@ export default function AdminPayouts() {
             </tr>
           </thead>
           <tbody>
-            {payouts.map((pay) => (
-              <tr key={pay.id}>
-                <td className={styles.id}>{pay.id}</td>
-                <td className={styles.creator}>{pay.creator}</td>
-                <td className={styles.amount}>{pay.amount}</td>
-                <td className={styles.method}>{pay.method}</td>
-                <td className={styles.date}>{pay.requestDate}</td>
-                <td>
-                  <span className={`${styles.statusBadge} ${styles[pay.status.toLowerCase()]}`}>
-                    {pay.status}
-                  </span>
-                </td>
-                <td>
-                  {pay.status === 'Pending' ? (
-                    <button className={styles.btnPay} onClick={(e) => { e.target.parentElement.parentElement.style.opacity = '0.5'; alert('Payout processed successfully!'); }}>Mark as Paid</button>
-                  ) : (
-                    <span className={styles.paidText}>Processed</span>
-                  )}
-                </td>
-              </tr>
-            ))}
+            {loading ? (
+              <tr><td colSpan="7" style={{textAlign: 'center', padding: '20px'}}>Loading payouts...</td></tr>
+            ) : payouts.length === 0 ? (
+              <tr><td colSpan="7" style={{textAlign: 'center', padding: '20px', color: 'var(--text-secondary)'}}>No payouts found.</td></tr>
+            ) : (
+              payouts.map((pay) => (
+                <tr key={pay._id || pay.id}>
+                  <td className={styles.id}>{pay.id || `#${pay._id?.slice(-6).toUpperCase()}`}</td>
+                  <td className={styles.creator}>{pay.creator}</td>
+                  <td className={styles.amount}>{pay.amount}</td>
+                  <td className={styles.method}>{pay.method}</td>
+                  <td className={styles.date}>{new Date(pay.requestDate).toLocaleDateString()}</td>
+                  <td>
+                    <span className={`${styles.statusBadge} ${styles[pay.status.toLowerCase()]}`}>
+                      {pay.status}
+                    </span>
+                  </td>
+                  <td>
+                    {pay.status === 'Pending' ? (
+                      <button className={styles.btnPay} onClick={(e) => { e.target.parentElement.parentElement.style.opacity = '0.5'; alert('Payout processed successfully!'); }}>Mark as Paid</button>
+                    ) : (
+                      <span className={styles.paidText}>Processed</span>
+                    )}
+                  </td>
+                </tr>
+              ))
+            )}
           </tbody>
         </table>
       </div>
