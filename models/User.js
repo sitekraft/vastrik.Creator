@@ -16,7 +16,11 @@ const UserSchema = new mongoose.Schema({
     upiId: String
   },
   resetToken: { type: String },
-  resetTokenExpiry: { type: Date }
+  resetTokenExpiry: { type: Date },
+  notifications: {
+    email: { type: Boolean, default: true },
+    sms: { type: Boolean, default: false }
+  }
 }, { timestamps: true });
 
 export default mongoose.models.User || mongoose.model('User', UserSchema);

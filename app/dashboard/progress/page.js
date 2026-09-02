@@ -1,6 +1,36 @@
+'use client';
+
+import { useState, useEffect } from 'react';
 import styles from './page.module.css';
 
 export default function ProgressPage() {
+  const [profile, setProfile] = useState({ points: 0, rank: 'Newbie' });
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchProfile() {
+      if (typeof window !== 'undefined') {
+        const email = localStorage.getItem('vastrik_creator_email');
+        if (email) {
+          try {
+            const res = await fetch(`/api/creator/profile?email=${encodeURIComponent(email)}`);
+            const data = await res.json();
+            if (data.success && data.profile) {
+              setProfile(data.profile);
+            }
+          } catch (err) {
+            console.error(err);
+          }
+        }
+      }
+      setLoading(false);
+    }
+    fetchProfile();
+  }, []);
+
+  const ranks = ['Newbie', 'Rising Star', 'Elite', 'Icon'];
+  const currentRankIndex = ranks.indexOf(profile.rank || 'Newbie');
+
   return (
     <div className={styles.page}>
       <header className={styles.header}>
@@ -11,60 +41,37 @@ export default function ProgressPage() {
         <div className={styles.card}>
           <h3 className={styles.cardTitle}>Rank Progression</h3>
           <div className={styles.timeline}>
-            <div className={styles.step}>
-              <div className={`${styles.circle} ${styles.active}`}></div>
-              <div className={styles.line}></div>
-              <span className={styles.label}>Newbie</span>
-            </div>
-            <div className={styles.step}>
-              <div className={`${styles.circle} ${styles.active}`}></div>
-              <div className={styles.line}></div>
-              <span className={styles.label}>Rising Star</span>
-            </div>
-            <div className={styles.step}>
-              <div className={`${styles.circle} ${styles.current}`}></div>
-              <div className={styles.line}></div>
-              <span className={`${styles.label} ${styles.highlight}`}>Elite (Current)</span>
-            </div>
-            <div className={styles.step}>
-              <div className={styles.circle}></div>
-              <span className={styles.label}>Icon</span>
-            </div>
+            {ranks.map((rankName, index) => {
+              const isActive = index <= currentRankIndex;
+              const isCurrent = index === currentRankIndex;
+              
+              return (
+                <div key={rankName} className={styles.step}>
+                  <div className={`${styles.circle} ${isCurrent ? styles.current : isActive ? styles.active : ''}`}></div>
+                  {index < ranks.length - 1 && <div className={styles.line}></div>}
+                  <span className={`${styles.label} ${isCurrent ? styles.highlight : ''}`}>
+                    {rankName} {isCurrent && '(Current)'}
+                  </span>
+                </div>
+              );
+            })}
           </div>
-          <p className={styles.helperText}>Only 50,000 more views needed to reach Icon rank!</p>
+          <p className={styles.helperText}>
+            {profile.rank === 'Icon' 
+              ? 'You have reached the top rank!' 
+              : 'Keep completing missions to unlock the next rank.'}
+          </p>
         </div>
 
         <div className={styles.card}>
           <h3 className={styles.cardTitle}>Audience Engagement</h3>
           <div className={styles.mockChart}>
-            <div className={styles.barContainer}>
-              <div className={styles.bar} style={{height: '60%'}}></div>
-              <span>Mon</span>
-            </div>
-            <div className={styles.barContainer}>
-              <div className={styles.bar} style={{height: '80%'}}></div>
-              <span>Tue</span>
-            </div>
-            <div className={styles.barContainer}>
-              <div className={styles.bar} style={{height: '40%'}}></div>
-              <span>Wed</span>
-            </div>
-            <div className={styles.barContainer}>
-              <div className={styles.bar} style={{height: '100%', background: 'var(--accent-primary)'}}></div>
-              <span>Thu</span>
-            </div>
-            <div className={styles.barContainer}>
-              <div className={styles.bar} style={{height: '70%'}}></div>
-              <span>Fri</span>
-            </div>
-            <div className={styles.barContainer}>
-              <div className={styles.bar} style={{height: '90%'}}></div>
-              <span>Sat</span>
-            </div>
-            <div className={styles.barContainer}>
-              <div className={styles.bar} style={{height: '50%'}}></div>
-              <span>Sun</span>
-            </div>
+            {['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].map((day) => (
+              <div key={day} className={styles.barContainer}>
+                <div className={styles.bar} style={{height: '0%'}}></div>
+                <span>{day}</span>
+              </div>
+            ))}
           </div>
         </div>
       </div>
