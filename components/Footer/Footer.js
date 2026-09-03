@@ -12,7 +12,7 @@ export default function Footer() {
               VASTRIK<span className={styles.creatorTag}>CREATOR</span>
             </Link>
             <p className={styles.brandDesc}>
-              Design • Stitch • Wear. Connecting creators with India's bespoke custom fashion & Master Karigar ecosystem.
+              Empowering fashion creators and influencers. Partner with Vastrik to monetize your style, reels, and fashion content.
             </p>
             <div className={styles.quickContact}>
               <a href="https://wa.me/918009651086" target="_blank" rel="noopener noreferrer" className={styles.contactBadge}>

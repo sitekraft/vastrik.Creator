@@ -7,14 +7,14 @@ export default function Hero() {
       <div className="container">
         <div className={styles.content}>
           <div className={styles.tag}>
-            <span className={styles.icon}>✨</span> DESIGN • STITCH • WEAR
+            <span className={styles.icon}>✨</span> OFFICIAL CREATOR NETWORK
           </div>
           <h1 className={styles.title}>
-            WEAR YOUR IMAGINATION.<br />
+            VASTRIK CREATOR PROGRAM.<br />
             <span className="gradient-text">GET PAID TO CREATE.</span>
           </h1>
           <p className={styles.subtitle}>
-            Join India's premier bespoke fashion creator network. Showcase 100% custom-fit Karigar craftsmanship, bring viral Pinterest sketches to life, and earn guaranteed payouts for your views.
+            Join India&apos;s premier fashion creator network. Create viral fashion content, review bespoke designs, and earn guaranteed payouts for every view.
           </p>
           <div className={styles.actions}>
             <Link href="/apply" className="btn-primary">
