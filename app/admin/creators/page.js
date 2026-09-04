@@ -41,10 +41,11 @@ export default function AdminCreators() {
         <table className={styles.table}>
           <thead>
             <tr>
-              <th>ID</th>
-              <th>Creator Name</th>
+              <th>App ID</th>
+              <th>Creator Info</th>
+              <th>UPI ID</th>
               <th>Rank Tier</th>
-              <th>Total Points</th>
+              <th>Points</th>
               <th>Status</th>
               <th>Actions</th>
             </tr>
@@ -57,8 +58,14 @@ export default function AdminCreators() {
             ) : (
               creators.map((creator) => (
                 <tr key={creator._id}>
-                  <td className={styles.id}>#{creator._id.slice(-6).toUpperCase()}</td>
-                  <td className={styles.name}>{creator.name}</td>
+                  <td className={styles.id}>
+                    {creator.applicationId !== 'N/A' ? `#${creator.applicationId.toString().slice(-6).toUpperCase()}` : 'N/A'}
+                  </td>
+                  <td>
+                    <div className={styles.name}>{creator.name}</div>
+                    <div style={{ fontSize: '12px', color: 'var(--text-secondary)' }}>{creator.email}</div>
+                  </td>
+                  <td>{creator.bankDetails?.upiId || 'Not set'}</td>
                   <td>
                     <span className={`${styles.rankBadge} ${styles[(creator.rank || 'Newbie').toLowerCase()]}`}>
                       {creator.rank || 'Newbie'}

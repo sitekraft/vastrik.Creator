@@ -57,24 +57,42 @@ export default function RewardsPage() {
       <h3 className={styles.sectionTitle}>REDEEMABLE PERKS</h3>
       <div className={styles.grid}>
         <div className={styles.card}>
-          <div className={styles.icon}>👕</div>
-          <h4 className={styles.cardTitle}>Vastrik Exclusive Hoodie</h4>
-          <p className={styles.cardDesc}>Limited edition neon-thread hoodie.</p>
-          <button className={styles.redeemBtn}>Redeem for 10K Points</button>
+          <div className={styles.icon}>
+            <img src="/reward_tshirt.jpg" alt="Vastrik Exclusive T-Shirt" />
+          </div>
+          <h4 className={styles.cardTitle}>Vastrik Exclusive T-Shirt</h4>
+          <p className={styles.cardDesc}>Limited edition premium t-shirt.</p>
+          <button 
+            className={styles.redeemBtn} 
+            disabled={points < 10000}
+            onClick={() => alert('T-Shirt Redeemed Successfully!')}
+          >
+            {points >= 10000 ? 'Redeem for 10K Points' : 'Locked (Needs 10K Points)'}
+          </button>
         </div>
         
         <div className={styles.card}>
-          <div className={styles.icon}>🎟️</div>
-          <h4 className={styles.cardTitle}>VIP Fashion Week Ticket</h4>
-          <p className={styles.cardDesc}>Front row access to the upcoming showcase.</p>
-          <button className={styles.redeemBtn}>Redeem for 50K Points</button>
+          <div className={styles.icon}>
+            <img src="/reward_coupon.jpg" alt="Shopping Coupons" />
+          </div>
+          <h4 className={styles.cardTitle}>Shopping Coupons</h4>
+          <p className={styles.cardDesc}>Exclusive discount coupons for Vastrik store.</p>
+          <button 
+            className={styles.redeemBtn} 
+            disabled={points < 20000}
+            onClick={() => alert('Coupons Redeemed Successfully!')}
+          >
+            {points >= 20000 ? 'Redeem for 20K Points' : 'Locked (Needs 20K Points)'}
+          </button>
         </div>
         
         <div className={styles.card}>
-          <div className={styles.icon}>📸</div>
-          <h4 className={styles.cardTitle}>Professional Photoshoot</h4>
-          <p className={styles.cardDesc}>A fully sponsored shoot with our top photographers.</p>
-          <button className={styles.redeemBtn} disabled>Locked (Needs Icon Rank)</button>
+          <div className={styles.icon}>
+            <img src="/reward_phone.jpg" alt="Flagship Smartphone" />
+          </div>
+          <h4 className={styles.cardTitle}>Flagship Smartphone</h4>
+          <p className={styles.cardDesc}>The latest top-tier smartphone for creators.</p>
+          <button className={styles.redeemBtn} disabled>Locked (Coming Soon)</button>
         </div>
       </div>
     </div>

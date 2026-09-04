@@ -22,11 +22,6 @@ export default function DashboardHeader() {
         <h1 className={styles.title}>HEY, {creatorName} 👋</h1>
         <p className={styles.subtitle}>Ready for your next challenge?</p>
       </div>
-      
-      <div className={styles.actions}>
-        <button className={styles.iconBtn}>🔔</button>
-        <button className={styles.iconBtn}>✉️</button>
-      </div>
     </header>
   );
 }

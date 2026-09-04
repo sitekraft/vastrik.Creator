@@ -23,9 +23,20 @@ export default function DashboardLayout({ children }) {
         return;
       }
 
-      // 2. Check if user has an approved email stored in localStorage
+      // 2. Check if user has an approved email stored in localStorage or in URL
       if (typeof window !== 'undefined') {
-        const storedEmail = localStorage.getItem('vastrik_creator_email');
+        const urlParams = new URLSearchParams(window.location.search);
+        const authEmail = urlParams.get('auth');
+        
+        let storedEmail = localStorage.getItem('vastrik_creator_email');
+
+        if (authEmail) {
+          storedEmail = authEmail;
+          localStorage.setItem('vastrik_creator_email', authEmail);
+          // Remove auth param from URL for cleaner look
+          window.history.replaceState({}, document.title, window.location.pathname);
+        }
+
         if (storedEmail) {
           setCreatorEmail(storedEmail);
           try {
