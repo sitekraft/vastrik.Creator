@@ -39,6 +39,11 @@ export default function SettingsPage() {
   }, []);
 
   const handleSaveProfile = async () => {
+    if (!profile.name || profile.name.trim().length < 3) {
+      setMessage({ text: 'Display name must be at least 3 characters.', type: 'error' });
+      return;
+    }
+
     setSavingProfile(true);
     await saveChanges('Profile updated successfully!');
     setSavingProfile(false);
@@ -50,6 +55,13 @@ export default function SettingsPage() {
   };
 
   const handleSavePayment = async () => {
+    const upiRegex = /^[a-zA-Z0-9.\-_]{2,256}@[a-zA-Z]{2,64}$/;
+    
+    if (!profile.upiId || !upiRegex.test(profile.upiId)) {
+      setMessage({ text: 'Please enter a valid UPI ID (e.g., name@ybl).', type: 'error' });
+      return;
+    }
+
     setSavingPayment(true);
     await saveChanges('Payment method updated!');
     setSavingPayment(false);

@@ -77,9 +77,18 @@ export async function PATCH(request) {
       }
       await user.save();
     } else {
-      // If user doesn't exist yet, we can't really update them in this simple flow, but ideally they'd be created upon application approval.
-      // For now, just return an error or pretend success.
-      return NextResponse.json({ success: false, message: 'User not found in DB yet. Please apply first.' }, { status: 404 });
+      // Create user if they somehow have access but no record
+      const newUser = new User({
+        name: name || 'Creator',
+        email: email,
+        password: 'magic-link-login', // Dummy password since they use magic link
+        role: 'creator',
+        rank: 'Newbie',
+        points: 0,
+        bankDetails: { upiId: upiId || '' },
+        notifications: notifications || { email: true, sms: false }
+      });
+      await newUser.save();
     }
 
     return NextResponse.json({ success: true, message: 'Profile updated successfully' });

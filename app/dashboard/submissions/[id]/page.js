@@ -1,5 +1,6 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import styles from './page.module.css';
@@ -7,19 +8,43 @@ import styles from './page.module.css';
 export default function SubmissionDetail({ params }) {
   const router = useRouter();
   
-  // Dummy data
-  const submission = {
-    id: params.id,
-    title: 'Neon Nights Entry',
-    challenge: 'STYLE YOUR VASTRIK LOOK',
-    status: 'Approved',
-    views: '12K',
-    pointsEarned: 2450,
-    date: 'Oct 24, 2024',
-    img: '/dashboard_challenge.jpg',
-    desc: 'Dressed in the new neon crop jacket with cargo pants. Shot in downtown at midnight to catch those cyberpunk vibes. #Vastrik #NeonNights',
-    link: 'https://instagram.com/p/mock12345'
-  };
+  const [submission, setSubmission] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+
+  useEffect(() => {
+    async function fetchSubmission() {
+      try {
+        const res = await fetch(`/api/submissions/${params.id}`);
+        const data = await res.json();
+        if (data.success && data.submission) {
+          setSubmission({
+            id: data.submission._id,
+            title: 'Submission Entry', // Or fetch challenge title
+            challenge: 'Vastrik Creator Mission',
+            status: data.submission.status,
+            views: 'Pending Sync', // Not tracking actual views yet
+            pointsEarned: data.submission.status === 'Approved' ? 5000 : 0, // Placeholder mapping
+            date: new Date(data.submission.createdAt).toLocaleDateString(),
+            img: '/dashboard_challenge.jpg',
+            desc: data.submission.description || data.submission.caption || 'No description provided.',
+            link: data.submission.videoUrl
+          });
+        } else {
+          setError('Submission not found.');
+        }
+      } catch (err) {
+        console.error(err);
+        setError('Failed to load submission.');
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchSubmission();
+  }, [params.id]);
+
+  if (loading) return <div className={styles.page}>Loading...</div>;
+  if (error) return <div className={styles.page}>{error}</div>;
 
   return (
     <div className={styles.page}>

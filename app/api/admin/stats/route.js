@@ -6,27 +6,32 @@ import Submission from '@/models/Submission';
 import User from '@/models/User';
 import { inMemoryStore } from '@/lib/inMemoryStore';
 
+import Payout from '@/models/Payout';
+
 export async function GET() {
   try {
     let totalCreators = 0;
     let pendingApplications = 0;
     let activeChallenges = 0;
     let totalSubmissions = 0;
+    let totalPayoutsValue = 0;
 
     try {
       await dbConnect();
-      const [approvedAppsCount, usersCount, pendingAppsCount, activeChallengesCount, subsCount] = await Promise.all([
-        Application.countDocuments({ status: 'Approved' }),
+      const [usersCount, pendingAppsCount, activeChallengesCount, subsCount, payouts] = await Promise.all([
         User.countDocuments({ role: 'creator' }),
         Application.countDocuments({ status: 'Pending' }),
         Challenge.countDocuments({ status: 'Active' }),
-        Submission.countDocuments({})
+        Submission.countDocuments({}),
+        Payout.find({ status: 'Paid' }).lean()
       ]);
 
-      totalCreators = approvedAppsCount + usersCount;
+      totalCreators = usersCount;
       pendingApplications = pendingAppsCount;
       activeChallenges = activeChallengesCount;
       totalSubmissions = subsCount;
+      
+      totalPayoutsValue = payouts.reduce((sum, p) => sum + (parseFloat(p.amount.toString().replace(/[^0-9.-]+/g,"")) || 0), 0);
     } catch (dbErr) {
       console.warn('MongoDB offline, computing stats from in-memory store:', dbErr.message);
       const apps = inMemoryStore.getApplications();
@@ -43,7 +48,7 @@ export async function GET() {
         pendingApplications,
         activeChallenges,
         totalSubmissions,
-        totalPayouts: '₹14,000'
+        totalPayouts: `₹${totalPayoutsValue.toLocaleString()}`
       }
     });
 

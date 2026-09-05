@@ -1,7 +1,9 @@
 import styles from './UpcomingMissions.module.css';
 import Link from 'next/link';
 
-export default function UpcomingMissions() {
+export default function UpcomingMissions({ challenges = [] }) {
+  const upcoming = challenges.filter(c => c.status === 'Upcoming' || new Date(c.startDate) > new Date()).slice(0, 3);
+
   return (
     <div className={styles.container}>
       <div className={styles.header}>
@@ -10,25 +12,19 @@ export default function UpcomingMissions() {
       </div>
       
       <div className={styles.grid}>
-        <div className={styles.card}>
-          <div className={styles.cardTop}>
-            <div className={styles.tag}>ACTIVE BRIEF</div>
-            <div className={styles.icon}>⚡</div>
+        {upcoming.length === 0 ? (
+          <p style={{color: 'var(--text-secondary)'}}>No upcoming missions right now.</p>
+        ) : upcoming.map((c, i) => (
+          <div key={c._id || i} className={styles.card}>
+            <div className={styles.cardTop}>
+              <div className={styles.tag}>{c.status === 'Active' ? 'ACTIVE BRIEF' : 'UPCOMING'}</div>
+              <div className={styles.icon}>⚡</div>
+            </div>
+            <h4 className={styles.missionTitle}>{c.title}</h4>
+            <p className={styles.reward}>Max Payout: {c.rewardPool}</p>
           </div>
-          <h4 className={styles.missionTitle}>AI SKETCH ANALYZER TEST</h4>
-          <p className={styles.reward}>Max Payout: ₹5,000 / 1M Views</p>
-        </div>
-        
-        <div className={styles.card}>
-          <div className={styles.cardTop}>
-            <div className={styles.tag}>ACTIVE BRIEF</div>
-            <div className={styles.icon}>👗</div>
-          </div>
-          <h4 className={styles.missionTitle}>CUSTOM FIT VS STANDARD SIZING</h4>
-          <p className={styles.reward}>Max Payout: ₹5,000 / 1M Views</p>
-        </div>
+        ))}
       </div>
     </div>
   );
 }
-

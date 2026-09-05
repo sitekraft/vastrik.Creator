@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import dbConnect from '@/lib/mongodb';
 import Collaboration from '@/models/Collaboration';
 import { inMemoryStore } from '@/lib/inMemoryStore';
+import { sendMail } from '@/lib/mail';
 
 export async function GET() {
   try {
@@ -55,6 +56,28 @@ export async function POST(request) {
     if (!collabId) {
       const saved = inMemoryStore.addCollaboration(body);
       collabId = saved._id;
+    }
+
+    // Send email to Vastrik Support
+    try {
+      const emailHtml = `
+        <h2>New Brand Collaboration Inquiry</h2>
+        <p><strong>Brand Name:</strong> ${brandName}</p>
+        <p><strong>Contact Person:</strong> ${contactPerson}</p>
+        <p><strong>Email:</strong> ${businessEmail}</p>
+        <p><strong>Phone:</strong> ${phone || 'N/A'}</p>
+        <p><strong>Type:</strong> ${collaborationType}</p>
+        <p><strong>Budget:</strong> ${budgetRange}</p>
+        <p><strong>Message:</strong></p>
+        <p>${message}</p>
+      `;
+      await sendMail({
+        to: 'vastrik.support@gmail.com',
+        subject: `[Brand Collab] ${brandName} - ${collaborationType}`,
+        html: emailHtml
+      });
+    } catch (mailErr) {
+      console.error('Failed to send brand collab email:', mailErr);
     }
 
     return NextResponse.json({ 

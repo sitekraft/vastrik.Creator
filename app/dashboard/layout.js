@@ -5,6 +5,7 @@ import Sidebar from '@/components/Sidebar/Sidebar';
 import styles from './layout.module.css';
 import { useSession } from 'next-auth/react';
 import Link from 'next/link';
+import UpiModal from '@/components/UpiModal/UpiModal';
 
 export default function DashboardLayout({ children }) {
   const { data: session, status } = useSession();
@@ -165,6 +166,7 @@ export default function DashboardLayout({ children }) {
   // Approved Creator Layout
   return (
     <div className={styles.layout}>
+      <UpiModal />
       <Sidebar />
       <main className={styles.mainContent}>
         {children}

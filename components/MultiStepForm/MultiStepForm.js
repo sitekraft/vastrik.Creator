@@ -30,9 +30,23 @@ export default function MultiStepForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleNext = () => {
+    // Shared Regex Patterns
+    const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+    const phoneRegex = /^\+?[0-9]{10,15}$/;
+    const handleRegex = /^(@[a-zA-Z0-9_.]+|https?:\/\/.+)$/;
+    const urlRegex = /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/;
+
     if (currentStep === 1) {
-      if (!formData.fullName || !formData.email || !formData.phone) {
-        alert('Please fill out all basic info fields.');
+      if (!formData.fullName || formData.fullName.trim().length < 3) {
+        alert('Please enter a valid full name (min 3 characters).');
+        return;
+      }
+      if (!formData.email || !emailRegex.test(formData.email)) {
+        alert('Please enter a valid email address.');
+        return;
+      }
+      if (!formData.phone || !phoneRegex.test(formData.phone.replace(/[\s-]/g, ''))) {
+        alert('Please enter a valid 10-15 digit phone number.');
         return;
       }
     }
@@ -42,11 +56,27 @@ export default function MultiStepForm() {
         alert('Please provide at least one social media handle (Instagram or YouTube).');
         return;
       }
+      if (formData.instagramHandle && !handleRegex.test(formData.instagramHandle.trim())) {
+        alert('Instagram handle must start with "@" or be a valid URL.');
+        return;
+      }
+      if (formData.youtubeHandle && !handleRegex.test(formData.youtubeHandle.trim())) {
+        alert('YouTube handle must start with "@" or be a valid URL.');
+        return;
+      }
     }
     
     if (currentStep === 3) {
-      if (!formData.contentNiche || !formData.aesthetics) {
-        alert('Please select your primary niche and describe your aesthetic.');
+      if (!formData.contentNiche) {
+        alert('Please select your primary niche.');
+        return;
+      }
+      if (!formData.aesthetics || formData.aesthetics.trim().length < 30) {
+        alert('Please describe your aesthetic in detail (minimum 30 characters).');
+        return;
+      }
+      if (formData.portfolioLink && !urlRegex.test(formData.portfolioLink.trim())) {
+        alert('Please provide a valid URL for your portfolio.');
         return;
       }
     }

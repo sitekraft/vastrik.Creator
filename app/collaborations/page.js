@@ -26,6 +26,32 @@ export default function BrandCollaborations() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    // Validations
+    const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+    const phoneRegex = /^\+?[0-9]{10,15}$/;
+
+    if (formData.brandName.trim().length < 2) {
+      setErrorMsg('Please enter a valid brand name.');
+      return;
+    }
+    if (formData.contactPerson.trim().length < 3) {
+      setErrorMsg('Please enter a valid contact person name.');
+      return;
+    }
+    if (!emailRegex.test(formData.businessEmail)) {
+      setErrorMsg('Please enter a valid business email address.');
+      return;
+    }
+    if (formData.phone && !phoneRegex.test(formData.phone.replace(/[\s-]/g, ''))) {
+      setErrorMsg('Please enter a valid 10-15 digit phone number.');
+      return;
+    }
+    if (formData.message.trim().length < 30) {
+      setErrorMsg('Please provide a detailed campaign message (minimum 30 characters).');
+      return;
+    }
+
     setLoading(true);
     setErrorMsg('');
     setSuccessMsg('');

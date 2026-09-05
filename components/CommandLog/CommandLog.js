@@ -1,32 +1,46 @@
 import styles from './CommandLog.module.css';
 
-export default function CommandLog() {
-  const logs = [
-    {
-      icon: '📢',
-      title: 'New mission brief live:',
-      highlight: 'PINTEREST & CELEB LOOK DECONSTRUCT',
-      time: 'Live Now'
-    },
-    {
-      icon: '⚡',
-      title: 'Zero-Inventory UGC active on',
-      highlight: 'vastrik.store (#analyzer)',
-      time: '2 hours ago'
-    },
-    {
-      icon: '💰',
-      title: 'Milestone tier unlocked:',
-      highlight: '₹5,000 / 1M+ Views',
-      time: '1 day ago'
-    },
-    {
+export default function CommandLog({ challenges, submissions, profile }) {
+  // Generate logs from recent challenges and submissions
+  const logs = [];
+
+  if (profile?.upiId) {
+    logs.push({
       icon: '✅',
       title: 'Creator Atelier status:',
-      highlight: 'Verified Creator',
+      highlight: 'UPI Verified',
       time: 'Active'
-    }
-  ];
+    });
+  }
+
+  if (challenges && challenges.length > 0) {
+    const latest = challenges.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))[0];
+    logs.push({
+      icon: '📢',
+      title: 'New mission brief live:',
+      highlight: latest.title,
+      time: 'Live Now'
+    });
+  }
+
+  if (submissions && submissions.length > 0) {
+    const latestSub = submissions.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))[0];
+    logs.push({
+      icon: latestSub.status === 'Approved' ? '💰' : '⏳',
+      title: `Submission ${latestSub.status.toLowerCase()}:`,
+      highlight: `For Challenge ID: ${latestSub.challengeId.slice(-4)}`,
+      time: 'Recent'
+    });
+  }
+
+  if (logs.length === 0) {
+    logs.push({
+      icon: '👋',
+      title: 'Welcome to Vastrik Creator',
+      highlight: 'Join a mission to get started',
+      time: 'Just now'
+    });
+  }
 
 
   return (

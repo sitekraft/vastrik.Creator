@@ -52,9 +52,6 @@ export default function Sidebar() {
           <Link href="/dashboard/settings" className={styles.footerLink}>
             <span className={styles.icon}>⚙️</span> Settings
           </Link>
-          <Link href="/dashboard/support" className={styles.footerLink}>
-            <span className={styles.icon}>❓</span> Support
-          </Link>
         </div>
       </div>
     </aside>

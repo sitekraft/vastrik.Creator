@@ -22,17 +22,20 @@ export default function NewSubmission() {
     setIsSubmitting(true);
     
     try {
-      const res = await fetch('/api/submissions', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...formData, userId: 'dummy-user-id' }) // NextAuth session would provide real ID
-      });
-      const data = await res.json();
-      if(data.success) {
-        alert("Submission uploaded successfully! Our moderators will review it shortly.");
-        router.push('/dashboard/submissions');
-      } else {
-        alert("Failed to submit.");
+      if (typeof window !== 'undefined') {
+        const email = localStorage.getItem('vastrik_creator_email');
+        const res = await fetch('/api/submissions', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ ...formData, userId: email }) // Using email as user identity for MVP
+        });
+        const data = await res.json();
+        if(data.success) {
+          alert("Submission uploaded successfully! Our moderators will review it shortly.");
+          router.push('/dashboard/submissions');
+        } else {
+          alert("Failed to submit.");
+        }
       }
     } catch(err) {
       console.error(err);

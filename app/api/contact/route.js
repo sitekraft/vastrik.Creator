@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import dbConnect from '@/lib/mongodb';
 import ContactMessage from '@/models/ContactMessage';
 import { inMemoryStore } from '@/lib/inMemoryStore';
+import { sendMail } from '@/lib/mail';
 
 export async function GET() {
   try {
@@ -53,6 +54,26 @@ export async function POST(request) {
     if (!ticketId) {
       const saved = inMemoryStore.addContactMessage(body);
       ticketId = saved._id;
+    }
+
+    // Send email to Vastrik Support
+    try {
+      const emailHtml = `
+        <h2>New Support Ticket Submitted</h2>
+        <p><strong>Name:</strong> ${name}</p>
+        <p><strong>Email:</strong> ${email}</p>
+        <p><strong>Phone:</strong> ${phone || 'N/A'}</p>
+        <p><strong>Category:</strong> ${subject}</p>
+        <p><strong>Message:</strong></p>
+        <p>${message}</p>
+      `;
+      await sendMail({
+        to: 'vastrik.support@gmail.com',
+        subject: `[Support Ticket] ${subject} - from ${name}`,
+        html: emailHtml
+      });
+    } catch (mailErr) {
+      console.error('Failed to send support email:', mailErr);
     }
 
     return NextResponse.json({ 

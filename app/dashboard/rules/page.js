@@ -30,7 +30,7 @@ export default function RulesPage() {
           <h2 className={styles.sectionTitle}>3. Rewards & Payouts</h2>
           <ul className={styles.list}>
             <li><strong>Points System:</strong> Points are awarded based on a combination of internal review score and social engagement metrics (views/likes).</li>
-            <li><strong>Withdrawals:</strong> Cash withdrawals require a minimum balance of ₹10,000. Processing takes 3-5 business days.</li>
+            <li><strong>Top 3 Winners Payout:</strong> 5k for 1M views, 3k for 50k views, 2k for 30k views.</li>
             <li><strong>Physical Merch:</strong> Redeemable physical items will be shipped within 2 weeks of claiming.</li>
           </ul>
         </section>

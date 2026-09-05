@@ -25,6 +25,28 @@ export default function SupportPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    // Validations
+    const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+    const phoneRegex = /^\+?[0-9]{10,15}$/;
+
+    if (formData.name.trim().length < 3) {
+      setErrorMsg('Please enter a valid full name (min 3 characters).');
+      return;
+    }
+    if (!emailRegex.test(formData.email)) {
+      setErrorMsg('Please enter a valid email address.');
+      return;
+    }
+    if (formData.phone && !phoneRegex.test(formData.phone.replace(/[\s-]/g, ''))) {
+      setErrorMsg('Please enter a valid 10-15 digit phone number.');
+      return;
+    }
+    if (formData.message.trim().length < 30) {
+      setErrorMsg('Please provide a detailed message (minimum 30 characters).');
+      return;
+    }
+
     setLoading(true);
     setErrorMsg('');
     setSuccessMsg('');
