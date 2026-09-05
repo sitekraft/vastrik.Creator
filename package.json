@@ -9,7 +9,6 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@next/swc-win32-x64-msvc": "^14.2.33",
     "bcryptjs": "^3.0.3",
     "dotenv": "^17.4.2",
     "mongoose": "^9.9.4",
