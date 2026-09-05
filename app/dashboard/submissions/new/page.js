@@ -67,14 +67,7 @@ export default function NewSubmission() {
           <input type="url" className={styles.input} placeholder="https://instagram.com/p/..." required value={formData.contentLink} onChange={(e) => setFormData({...formData, contentLink: e.target.value})} />
         </div>
 
-        <div className={styles.formGroup}>
-          <label className={styles.label}>Upload Thumbnail / Image</label>
-          <div className={styles.uploadArea}>
-            <span className={styles.uploadIcon}>⬆️</span>
-            <p>Drag and drop your image here, or click to browse</p>
-            <input type="file" className={styles.fileInput} accept="image/*" />
-          </div>
-        </div>
+
 
         <div className={styles.formGroup}>
           <label className={styles.label}>Description / Caption</label>
