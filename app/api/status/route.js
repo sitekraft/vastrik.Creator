@@ -4,6 +4,8 @@ import Application from '@/models/Application';
 import { inMemoryStore } from '@/lib/inMemoryStore';
 import mongoose from 'mongoose';
 
+export const dynamic = 'force-dynamic';
+
 export async function GET(request) {
   try {
     const { searchParams } = new URL(request.url);
