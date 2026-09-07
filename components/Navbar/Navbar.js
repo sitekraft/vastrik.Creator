@@ -17,6 +17,10 @@ export default function Navbar() {
         </div>
 
         <div className={`${styles.navLinks} ${mobileMenuOpen ? styles.mobileOpen : ''}`}>
+          <div className={styles.mobileHeader}>
+            <span className={styles.mobileTitle}>MENU</span>
+            <button className={styles.mobileClose} onClick={() => setMobileMenuOpen(false)}>&times;</button>
+          </div>
           <Link href="/#how-it-works" onClick={() => setMobileMenuOpen(false)} className={styles.navLink}>Playbook</Link>
           <Link href="/#payouts" onClick={() => setMobileMenuOpen(false)} className={styles.navLink}>Payouts</Link>
           <Link href="/#challenges" onClick={() => setMobileMenuOpen(false)} className={styles.navLink}>Missions</Link>
@@ -40,6 +44,7 @@ export default function Navbar() {
           </button>
         </div>
       </div>
+      {mobileMenuOpen && <div className={styles.backdrop} onClick={() => setMobileMenuOpen(false)}></div>}
     </nav>
   );
 }
