@@ -73,15 +73,16 @@ export async function PATCH(request) {
           <p>Hi ${updated.fullName},</p>
           <p>Your application to join Vastrik as a creator has been <strong>Approved</strong>!</p>
           <p>You can now access your dashboard instantly using the magic link below. No password required!</p>
-          <a href="http://localhost:3000/dashboard?auth=${encodeURIComponent(updated.email)}" style="display: inline-block; padding: 10px 20px; background-color: #6366f1; color: #fff; text-decoration: none; border-radius: 5px; margin-top: 10px;">Go to Dashboard</a>
+          <a href="https://creator.vastrik.store/dashboard?auth=${encodeURIComponent(updated.email)}" style="display: inline-block; padding: 10px 20px; background-color: #6366f1; color: #fff; text-decoration: none; border-radius: 5px; margin-top: 10px;">Go to Dashboard</a>
           <p style="margin-top: 20px; font-size: 12px; color: #888;">Welcome to the Vastrik community.</p>
         </div>
       `;
-      await sendMail({
+      const mailResult = await sendMail({
         to: updated.email,
         subject: 'Your Vastrik Creator Application is Approved! 🎉',
         html: emailHtml
       });
+      console.log('Mail delivery status for', updated.email, ':', mailResult);
     }
 
     return NextResponse.json({ 

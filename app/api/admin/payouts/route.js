@@ -66,7 +66,7 @@ export async function PATCH(request) {
             <p>Hi ${updatedPayout.creatorName},</p>
             <p>We have successfully processed your payout of <strong>${updatedPayout.amount}</strong> to your registered payment method (${updatedPayout.method}).</p>
             <p>Thank you for being one of the top creators on Vastrik!</p>
-            <a href="http://localhost:3000/dashboard" style="display: inline-block; padding: 10px 20px; background-color: #6366f1; color: #fff; text-decoration: none; border-radius: 5px; margin-top: 10px;">View Dashboard</a>
+            <a href="https://creator.vastrik.store/dashboard" style="display: inline-block; padding: 10px 20px; background-color: #6366f1; color: #fff; text-decoration: none; border-radius: 5px; margin-top: 10px;">View Dashboard</a>
           </div>
         `;
         await sendMail({
